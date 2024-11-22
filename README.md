@@ -1,44 +1,44 @@
-# MySQL-sous-container-Podman
+# MySQL-Podman
 
-Petit tuto pour installer et utiliser MySQL sous container Podman :
+## Quick Tutorial for Installing and Using MySQL with a Podman Container
 
-## Prérequis
+### Prerequisites
 
-- Assurez-vous que Podman est installé sur votre système. Vous pouvez suivre les instructions d'installation de Podman pour votre système d'exploitation [ici](https://podman.io/getting-started/installation).
+- Ensure that Podman is installed on your system. You can follow the installation instructions for your operating system [here](https://podman.io/getting-started/installation).
 
-## Étapes
+### Steps
 
-### 1. Installer Podman et MySQL
+#### 1. Install Podman and MySQL
 
-Pour installer MySQL en utilisant Podman, exécutez la commande suivante :
+To install MySQL using Podman, run the following command:
 
 ```sh
 podman run --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:latest
 ```
 
-### 2. Vérifier que le conteneur MySQL est en cours d'exécution
+### 2. Verify the MySQL Container is Running
 
-Pour vérifier que le conteneur MySQL est en cours d'exécution, utilisez la commande suivante :
+To check if the MySQL container is running, use the following command:
 
 ```
 podman ps
 ```
 
-Cette commande liste les conteneurs en cours d'exécution et vous devriez voir votre conteneur MySQL dans la liste.
+This command lists the running containers, and you should see your MySQL container in the list.
 
-### 3. Se connecter à MySQL à partir du conteneur
+### 3. Connect to MySQL from the Container
 
-Vous pouvez vous connecter à MySQL directement depuis le conteneur en utilisant la commande suivante :
+You can connect to MySQL directly from the container using the following command :
 
 ```
 podman exec -it mysql mysql -uroot -p
 ```
 
-Vous serez invité à entrer le mot de passe root que vous avez défini (my-secret-pw).
+You will be prompted to enter the root password you set (`my-secret-pw`).
 
-### 4. Connexion MySQL à partir de l'hôte
+### 4. Connect to MySQL from the Host
 
-Si vous voulez vous connecter à MySQL depuis votre hôte (la machine sur laquelle Podman est installé), vous devrez exposer le port MySQL. Pour ce faire, arrêtez le conteneur existant et relancez-le en exposant le port :
+If you want to connect to MySQL from your host (the machine where Podman is installed), you need to expose the MySQL port. To do this, stop the existing container and restart it with the port exposed:
 
 ```
 podman stop mysql
@@ -46,7 +46,7 @@ podman rm mysql
 podman run --name mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -p 3306:3306 -d mysql:latest
 ```
 
-Maintenant, vous pouvez vous connecter à MySQL depuis votre hôte en utilisant un client MySQL ou la ligne de commande :
+Now, you can connect to MySQL from your host using a MySQL client or the command line:
 
 ```
 mysql -h 127.0.0.1 -P 3306 -uroot -p
